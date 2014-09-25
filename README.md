@@ -39,6 +39,4 @@ This boots up an embedded tomcat on [http://localhost:8080/camunda-cycle/](http:
 > mvn clean install
 ```
 
-Creates `.war` files for all target platforms (Glassfish, JBoss, Tomcat).
-
-Have a look into the `cycle-(glassfish|jboss|tomcat)` folders to learn more.
+Creates `.zip`/`.tar.gz` files for Tomcat platform.
