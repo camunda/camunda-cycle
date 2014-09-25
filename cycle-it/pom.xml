@@ -15,13 +15,12 @@
     <signavio.baseurl>${env.signavio.baseurl}</signavio.baseurl>
 
     <!-- tomcat -->
-    <version.tomcat>7.0.55</version.tomcat>
+    <tomcat.version>7.0.55</tomcat.version>
     <tomcat.connector.http.port>48080</tomcat.connector.http.port>
     <tomcat.connector.http.redirectPort>48443</tomcat.connector.http.redirectPort>
     <tomcat.connector.ajp.port>48009</tomcat.connector.ajp.port>
     <tomcat.connector.ajp.redirectPort>48443</tomcat.connector.ajp.redirectPort>
     <tomcat.server.port>48005</tomcat.server.port>
-    <tomcat.runtime.location>../tomcat-runtime/target/server/apache-tomcat-${version.tomcat}</tomcat.runtime.location>
 
     <cargo.timeout>120000</cargo.timeout>
     <cargo.deploy.timeout>60000</cargo.deploy.timeout>
@@ -161,7 +160,6 @@
     <profile>
       <id>tomcat</id>
       <properties>
-        <tomcat.runtime>${basedir}/${tomcat.runtime.location}</tomcat.runtime>
         <http.port>${tomcat.connector.http.port}</http.port>
       </properties>
       <dependencies>
@@ -200,15 +198,15 @@
               <container>
                 <containerId>tomcat7x</containerId>
                 <append>false</append>
-                <!--<home>${tomcat.runtime}</home>-->
                 <timeout>${cargo.timeout}</timeout>
                 <artifactInstaller>
                   <groupId>org.apache.tomcat</groupId>
                   <artifactId>tomcat</artifactId>
-                  <version>${version.tomcat}</version>
+                  <version>${tomcat.version}</version>
                   <type>tar.gz</type>
                 </artifactInstaller>
                 <dependencies>
+                  <!-- required to sending mails -->
                   <dependency>
                     <groupId>javax.mail</groupId>
                     <artifactId>mail</artifactId>
