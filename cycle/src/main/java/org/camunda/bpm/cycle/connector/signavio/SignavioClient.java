@@ -27,47 +27,41 @@ import javax.net.ssl.SSLSocket;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import org.camunda.bpm.cycle.http.conn.ssl.X509HostnameVerifier;
+import org.apache.http.*;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.HttpRequestRetryHandler;
+import org.apache.http.client.fluent.Content;
+import org.apache.http.client.fluent.Executor;
+import org.apache.http.client.fluent.Form;
+import org.apache.http.client.fluent.Request;
+import org.apache.http.client.utils.HttpClientUtils;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.conn.ConnectTimeoutException;
+import org.apache.http.conn.params.ConnRoutePNames;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.conn.ssl.X509HostnameVerifier;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.InputStreamBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.NoConnectionReuseStrategy;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.PoolingClientConnectionManager;
+import org.apache.http.impl.conn.SchemeRegistryFactory;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.SyncBasicHttpParams;
+import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EntityUtils;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import org.camunda.bpm.cycle.exception.CycleException;
-import org.camunda.bpm.cycle.http.HttpException;
-import org.camunda.bpm.cycle.http.HttpHost;
-import org.camunda.bpm.cycle.http.HttpRequest;
-import org.camunda.bpm.cycle.http.HttpRequestInterceptor;
-import org.camunda.bpm.cycle.http.HttpResponse;
-import org.camunda.bpm.cycle.http.HttpResponseInterceptor;
-import org.camunda.bpm.cycle.http.ParseException;
-import org.camunda.bpm.cycle.http.auth.AuthScope;
-import org.camunda.bpm.cycle.http.auth.UsernamePasswordCredentials;
-import org.camunda.bpm.cycle.http.client.HttpRequestRetryHandler;
-import org.camunda.bpm.cycle.http.client.fluent.Content;
-import org.camunda.bpm.cycle.http.client.fluent.Executor;
-import org.camunda.bpm.cycle.http.client.fluent.Form;
-import org.camunda.bpm.cycle.http.client.fluent.Request;
-import org.camunda.bpm.cycle.http.client.utils.HttpClientUtils;
-import org.camunda.bpm.cycle.http.client.utils.URIBuilder;
-import org.camunda.bpm.cycle.http.conn.ConnectTimeoutException;
-import org.camunda.bpm.cycle.http.conn.params.ConnRoutePNames;
-import org.camunda.bpm.cycle.http.conn.scheme.Scheme;
-import org.camunda.bpm.cycle.http.conn.scheme.SchemeRegistry;
-import org.camunda.bpm.cycle.http.conn.ssl.SSLSocketFactory;
-import org.camunda.bpm.cycle.http.entity.ContentType;
-import org.camunda.bpm.cycle.http.entity.mime.HttpMultipartMode;
-import org.camunda.bpm.cycle.http.entity.mime.MultipartEntity;
-import org.camunda.bpm.cycle.http.entity.mime.content.FileBody;
-import org.camunda.bpm.cycle.http.entity.mime.content.InputStreamBody;
-import org.camunda.bpm.cycle.http.entity.mime.content.StringBody;
-import org.camunda.bpm.cycle.http.impl.NoConnectionReuseStrategy;
-import org.camunda.bpm.cycle.http.impl.client.DefaultHttpClient;
-import org.camunda.bpm.cycle.http.impl.conn.PoolingClientConnectionManager;
-import org.camunda.bpm.cycle.http.impl.conn.SchemeRegistryFactory;
-import org.camunda.bpm.cycle.http.params.HttpConnectionParams;
-import org.camunda.bpm.cycle.http.params.SyncBasicHttpParams;
-import org.camunda.bpm.cycle.http.protocol.HttpContext;
-import org.camunda.bpm.cycle.http.util.EntityUtils;
 import org.camunda.bpm.cycle.util.IoUtil;
 
 /**
@@ -416,7 +410,7 @@ public class SignavioClient {
     HttpConnectionParams.setLinger(params, 5000);
     
     // configure thread-safe client connection management
-    final PoolingClientConnectionManager connectionManager = 
+    final PoolingClientConnectionManager connectionManager =
             new PoolingClientConnectionManager(schemeRegistry, CONNECTION_TTL, TimeUnit.MILLISECONDS);
     connectionManager.setDefaultMaxPerRoute(MAX_OPEN_CONNECTIONS_PER_ROUTE);
     connectionManager.setMaxTotal(MAX_OPEN_CONNECTIONS_TOTAL);
@@ -557,7 +551,7 @@ public class SignavioClient {
     } catch (IOException e) {
       throw new CycleException(e.getMessage(), e);
     } finally {
-      HttpClientUtils.closeQuietly(response);      
+      HttpClientUtils.closeQuietly(response);
     }
   }
   

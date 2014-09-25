@@ -15,7 +15,6 @@
     <web.resources.override>src/main/runtime/default/webapp</web.resources.override>
     <java.resources.override>src/main/runtime/default/resources</java.resources.override>
     <properties.override>src/main/runtime/default/config.properties</properties.override>
-    <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
   </properties>
   
   <dependencies>
@@ -223,9 +222,12 @@
     
     <!-- required for SignavioClient -->
     <dependency>
-      <groupId>org.camunda.bpm.cycle</groupId>
-      <artifactId>camunda-cycle-httpclient</artifactId>
-      <version>${project.version}</version>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>fluent-hc</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpmime</artifactId>
     </dependency>
     <dependency>
       <groupId>commons-codec</groupId>
@@ -677,147 +679,6 @@
         <maven.tomcat.additionalConfigFilesDir>${basedir}/src/main/runtime/tomcat/config</maven.tomcat.additionalConfigFilesDir>
       </properties>
     </profile>
-    <profile>
-      <id>glassfish</id>
-      <dependencies>
-        <!-- javax.persistence -->
-        <dependency>
-          <groupId>org.hibernate</groupId>
-          <artifactId>hibernate-entitymanager</artifactId>
-          <exclusions>
-            <exclusion>
-              <groupId>org.javassist</groupId>
-              <artifactId>javassist</artifactId>        
-            </exclusion>
-          </exclusions>          
-        </dependency>
-        <dependency>
-          <groupId>cglib</groupId>
-          <artifactId>cglib</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>com.sun.jersey.contribs</groupId>
-          <artifactId>jersey-spring</artifactId>
-          <exclusions>
-            <exclusion>
-              <groupId>com.sun.jersey</groupId>
-              <artifactId>jersey-core</artifactId>
-            </exclusion>        
-            <exclusion>
-              <groupId>asm</groupId>
-              <artifactId>asm</artifactId>
-            </exclusion>        
-            <exclusion>
-              <artifactId>spring-core</artifactId>
-              <groupId>org.springframework</groupId>
-            </exclusion>
-            <exclusion>
-              <artifactId>spring-beans</artifactId>
-              <groupId>org.springframework</groupId>
-            </exclusion>
-            <exclusion>
-              <artifactId>spring-context</artifactId>
-              <groupId>org.springframework</groupId>
-            </exclusion>
-            <exclusion>
-              <artifactId>spring-web</artifactId>
-              <groupId>org.springframework</groupId>
-            </exclusion>
-            <exclusion>
-              <artifactId>spring-aop</artifactId>
-              <groupId>org.springframework</groupId>
-            </exclusion>
-          </exclusions>
-        </dependency>
-        <!-- nekohtml -->
-        <dependency>
-          <groupId>net.sourceforge.nekohtml</groupId>
-          <artifactId>nekohtml</artifactId>
-          <exclusions>
-            <exclusion>
-              <groupId>xml-apis</groupId>
-              <artifactId>xml-apis</artifactId>          
-            </exclusion>
-          </exclusions>
-        </dependency>
-        <dependency>
-          <groupId>commons-io</groupId>
-          <artifactId>commons-io</artifactId>
-        </dependency>
-      </dependencies>
-      <properties>
-        <web.resources.override>src/main/runtime/glassfish/webapp</web.resources.override>
-        <java.resources.override>src/main/runtime/glassfish/resources</java.resources.override>
-      </properties>
-    </profile>
-    <profile>
-      <id>jboss</id>
-      <dependencies>
-        <dependency>
-          <groupId>cglib</groupId>
-          <artifactId>cglib</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>com.sun.jersey</groupId>
-          <artifactId>jersey-json</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>com.sun.jersey.contribs</groupId>
-          <artifactId>jersey-spring</artifactId>
-          <exclusions>
-            <exclusion>
-              <artifactId>spring-core</artifactId>
-              <groupId>org.springframework</groupId>
-            </exclusion>
-            <exclusion>
-              <artifactId>spring-beans</artifactId>
-              <groupId>org.springframework</groupId>
-            </exclusion>
-            <exclusion>
-              <artifactId>spring-context</artifactId>
-              <groupId>org.springframework</groupId>
-            </exclusion>
-            <exclusion>
-              <artifactId>spring-web</artifactId>
-              <groupId>org.springframework</groupId>
-            </exclusion>
-            <exclusion>
-              <artifactId>spring-aop</artifactId>
-              <groupId>org.springframework</groupId>
-            </exclusion>
-            <exclusion>
-              <artifactId>asm</artifactId>
-              <groupId>asm</groupId>
-            </exclusion>
-          </exclusions>
-        </dependency>
-      </dependencies>
-      <properties>
-        <web.resources.override>src/main/runtime/jboss/webapp</web.resources.override>
-        <java.resources.override>src/main/runtime/jboss/resources</java.resources.override>
-        <properties.override>src/main/runtime/jboss/config/database.properties</properties.override>
-      </properties>
-      <build>
-        <plugins>         
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-war-plugin</artifactId>
-            <configuration>
-              <archive>
-                <manifest>
-                  <!-- Maven project version number -->
-                  <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                </manifest>
-                <manifestEntries>
-                  <Dependencies>org.hibernate,org.hibernate.envers,org.hibernate.validator,org.apache.xerces,org.apache.commons.io</Dependencies>
-                </manifestEntries>
-              </archive>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>   
   </profiles>
-  
-  
+
 </project>

@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 import javax.inject.Inject;
 
+import org.apache.http.client.HttpResponseException;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,6 @@ import org.camunda.bpm.cycle.connector.ContentInformation;
 import org.camunda.bpm.cycle.connector.Secured;
 import org.camunda.bpm.cycle.entity.ConnectorConfiguration;
 import org.camunda.bpm.cycle.exception.CycleException;
-import org.camunda.bpm.cycle.http.client.HttpResponseException;
 import org.camunda.bpm.cycle.util.IoUtil;
 
 @Component

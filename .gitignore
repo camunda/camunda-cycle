@@ -11,3 +11,5 @@ nbactions*.xml
 nb-configuration.xml
 .idea
 cycle-httpclient/dependency-reduced-pom.xml
+*.iml
+.DS_Store

@@ -27,10 +27,9 @@
   <modules>
     <module>cycle</module>
     <module>cycle-sql</module>
-    <module>cycle-jboss</module>
-    <module>cycle-glassfish</module>
     <module>cycle-tomcat</module>
-	  <module>cycle-httpclient</module>
+    <module>cycle-it</module>
+    <module>cycle-distro</module>
   </modules>
   
   <dependencyManagement>
@@ -38,11 +37,6 @@
       <dependency>
         <groupId>cglib</groupId>
         <artifactId>cglib</artifactId>
-        <version>${version.cglib}</version>
-      </dependency>
-      <dependency>
-        <groupId>cglib</groupId>
-        <artifactId>cglib-nodep</artifactId>
         <version>${version.cglib}</version>
       </dependency>
       <dependency>

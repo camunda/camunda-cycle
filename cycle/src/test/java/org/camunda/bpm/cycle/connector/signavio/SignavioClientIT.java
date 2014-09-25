@@ -15,12 +15,12 @@ import javax.inject.Inject;
 
 import junit.framework.Assert;
 
+import org.apache.http.ParseException;
 import org.camunda.bpm.cycle.connector.signavio.SignavioClient;
 import org.camunda.bpm.cycle.connector.signavio.SignavioConnector;
 import org.camunda.bpm.cycle.connector.signavio.SignavioJson;
 import org.camunda.bpm.cycle.entity.ConnectorConfiguration;
 import org.camunda.bpm.cycle.exception.CycleException;
-import org.camunda.bpm.cycle.http.ParseException;
 import org.camunda.bpm.cycle.util.BpmnNamespaceContext;
 import org.camunda.bpm.cycle.util.IoUtil;
 import org.codehaus.jettison.json.JSONException;
