@@ -380,7 +380,7 @@ public class SignavioClient {
       // set up a TrustManager that trusts everything
       sslContext.init(new KeyManager[0], new TrustManager[] { trustAllManager }, new SecureRandom());
       SSLContext.setDefault(sslContext);
-      
+
       SSLSocketFactory sslSF = new SSLSocketFactory(sslContext, SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 
       // set up an own X509HostnameVerifier because default one is still too strict.

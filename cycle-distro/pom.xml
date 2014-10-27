@@ -2,9 +2,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <artifactId>camunda-cycle-root</artifactId>
     <groupId>org.camunda.bpm.cycle</groupId>
-    <version>7.2.0-SNAPSHOT</version>
+    <artifactId>camunda-cycle-root</artifactId>
+    <version>3.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>camunda-cycle-distro</artifactId>
@@ -12,7 +12,32 @@
 
   <packaging>pom</packaging>
 
+  <properties>
+    <version.tomcat>7.0.50</version.tomcat>
+  </properties>
+
   <dependencies>
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat</artifactId>
+      <version>${version.tomcat}</version>
+      <type>tar.gz</type>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-jdbc</artifactId>
+      <version>${version.tomcat}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.mail</groupId>
+      <artifactId>mail</artifactId>
+    </dependency>
+
     <dependency>
       <groupId>org.camunda.bpm.cycle</groupId>
       <artifactId>camunda-cycle-tomcat</artifactId>
@@ -24,6 +49,13 @@
       <groupId>org.camunda.bpm.cycle</groupId>
       <artifactId>camunda-cycle-sql-scripts</artifactId>
       <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.camunda.bpm.distro</groupId>
+      <artifactId>camunda-h2-webapp</artifactId>
+      <version>7.2.0-alpha5</version>
+      <type>war</type>
     </dependency>
   </dependencies>
 

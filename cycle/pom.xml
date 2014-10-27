@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>camunda-cycle-root</artifactId>
     <groupId>org.camunda.bpm.cycle</groupId>
-    <version>7.2.0-SNAPSHOT</version>
+    <artifactId>camunda-cycle-root</artifactId>
+    <version>3.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>camunda-cycle</artifactId>
@@ -32,34 +32,51 @@
       <artifactId>spring-aop</artifactId>
     </dependency>
 
-    <!-- CGLIB for various things including @Transactional and spring-data-jpa -->
     <dependency>
-      <groupId>cglib</groupId>
-      <artifactId>cglib</artifactId>
-      <scope>provided</scope>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+      <version>1.7.0</version>
     </dependency>
-    <dependency>
+	<dependency>
       <groupId>org.aspectj</groupId>
       <artifactId>aspectjrt</artifactId>
       <version>1.7.0</version>
     </dependency>
     
-    <!-- libs needed for jax-rs stuff -->
+
+    <!-- Java EE APIs not provided on tomcat -->
+    <dependency>
+      <groupId>org.hibernate.javax.persistence</groupId>
+      <artifactId>hibernate-jpa-2.0-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish</groupId>
+      <artifactId>javax.annotation</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.inject</groupId>
+      <artifactId>javax.inject</artifactId>
+      <version>1</version>
+    </dependency>
+    <!-- persistence -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+    </dependency>
+    <!-- CGLIB for various things including @Transactional and spring-data-jpa -->
+    <dependency>
+      <groupId>cglib</groupId>
+      <artifactId>cglib</artifactId>
+    </dependency>
+    <!-- rest -->
     <dependency>
       <groupId>com.sun.jersey</groupId>
       <artifactId>jersey-json</artifactId>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>jaxb-api</artifactId>
-          <groupId>javax.xml.bind</groupId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>com.sun.jersey.contribs</groupId>
       <artifactId>jersey-spring</artifactId>
-      <scope>provided</scope>
+      <!-- exclude spring because of old versions -->
       <exclusions>
         <exclusion>
           <artifactId>spring-core</artifactId>
@@ -83,36 +100,17 @@
         </exclusion>
       </exclusions>
     </dependency>
-    <dependency>
-      <groupId>org.glassfish</groupId>
-      <artifactId>javax.annotation</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    
+
     <dependency>
       <groupId>javax.mail</groupId>
       <artifactId>mail</artifactId>
       <scope>provided</scope>
     </dependency>
-    
-    <!-- apis -->
+
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
-      <version>2.5</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>javax.inject</groupId>
-      <artifactId>javax.inject</artifactId>
-      <version>1</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <!-- jpa 2.0 api -->
-    <dependency>
-      <groupId>org.hibernate.javax.persistence</groupId>
-      <artifactId>hibernate-jpa-2.0-api</artifactId>
+      <version>${version.servlet-api}</version>
       <scope>provided</scope>
     </dependency>
 
@@ -123,32 +121,26 @@
       <version>1.6.6</version>
     </dependency>
 
-    <!-- Thymeleaf -->
+    <!-- templating -->
     <dependency>
       <groupId>org.thymeleaf</groupId>
       <artifactId>thymeleaf</artifactId>
-      <version>2.0.12</version>
+      <version>${version.thymeleaf}</version>
     </dependency>
     <dependency>
       <groupId>org.thymeleaf</groupId>
       <artifactId>thymeleaf-spring3</artifactId>
-      <version>2.0.12</version>
+      <version>${version.thymeleaf}</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.nekohtml</groupId>
       <artifactId>nekohtml</artifactId>
-      <exclusions>
-        <exclusion>
-          <artifactId>xercesImpl</artifactId>
-          <groupId>xerces</groupId>
-        </exclusion>
-      </exclusions>      
     </dependency>
     <!-- required for i18n with GNU gettext -->
     <dependency>
-      <groupId>org.xnap.commons</groupId>
+      <groupId>com.googlecode.gettext-commons</groupId>
       <artifactId>gettext-commons</artifactId>
-      <version>0.9.6</version>
+      <version>0.9.8</version>
     </dependency>
 
     <!-- saxon for XSLT transformations (roundtrip) -->
@@ -175,15 +167,66 @@
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-vfs2</artifactId>
       <version>2.0</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>maven-scm-api</artifactId>
+          <groupId>org.apache.maven.scm</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>maven-scm-provider-svnexe</artifactId>
+          <groupId>org.apache.maven.scm</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
-
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
-      <scope>provided</scope>
+    </dependency>
+
+    <!-- encryption library -->
+    <dependency>
+      <groupId>org.jasypt</groupId>
+      <artifactId>jasypt</artifactId>
+      <version>1.8</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcpg-jdk15on</artifactId>
+    </dependency>
+
+    <!-- required for SignavioClient -->
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>fluent-hc</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpmime</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.6</version>
+    </dependency>
+    
+    <!-- required for SvnConnector -->
+    <dependency>
+      <groupId>org.tigris.subversion</groupId>
+      <artifactId>svnclientadapter</artifactId>
+      <version>0.9.100</version>
+    </dependency>
+    <dependency>
+      <groupId>org.tmatesoft.svnkit</groupId>
+      <artifactId>svnkit-javahl16</artifactId>
+      <version>1.8.6</version>
     </dependency>
 
     <!-- testing -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.easytesting</groupId>
       <artifactId>fest-assert-core</artifactId>
@@ -200,41 +243,16 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit-dep</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.aspectj</groupId>
-      <artifactId>aspectjweaver</artifactId>
-      <version>1.7.0</version>
-    </dependency>
-    <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- for testing the email service -->
     <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-entitymanager</artifactId>
+      <groupId>org.subethamail</groupId>
+      <artifactId>subethasmtp-wiser</artifactId>
       <scope>test</scope>
     </dependency>
-    
-    <!-- required for SignavioClient -->
-    <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>fluent-hc</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpmime</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId>
-      <version>1.6</version>
-    </dependency>
-    
     <!-- required for SignavioConnectorIT -->
     <dependency>
       <groupId>xmlunit</groupId>
@@ -253,46 +271,18 @@
         </exclusion>
       </exclusions>
     </dependency>
-    
-    <!-- required for SvnConnector -->
-    <dependency>
-      <groupId>org.tigris.subversion</groupId>
-      <artifactId>svnclientadapter</artifactId>
-      <version>0.9.100</version>
-    </dependency>
-    <dependency>
-      <groupId>org.tmatesoft.svnkit</groupId>
-      <artifactId>svnkit</artifactId>
-      <version>1.3.4</version>
-    </dependency>
-    <dependency>
-      <groupId>org.tmatesoft.svnkit</groupId>
-      <artifactId>svnkit-javahl</artifactId>
-      <version>1.3.4</version>
-    </dependency>
-    
-    <!-- for testing the email service -->
-    <dependency>
-      <groupId>org.subethamail</groupId>
-      <artifactId>subethasmtp-wiser</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <!-- encryption library -->
-    <dependency>
-      <groupId>org.jasypt</groupId>
-      <artifactId>jasypt</artifactId>
-      <version>1.8</version>
-    </dependency>
       
   </dependencies>
 
   <build>
     <finalName>cycle</finalName>
+
     <filters>
       <filter>src/test/resources/config/test.properties</filter>
-      <filter>${properties.override}</filter>
+      <filter>src/main/runtime/default/config.properties</filter>
+      <filter>src/main/runtime/tomcat/config/database.properties</filter>
     </filters>
+
     <resources>
       <resource>
         <directory>src/main/resources</directory>
@@ -301,7 +291,12 @@
         <directory>${java.resources.override}</directory>
         <filtering>true</filtering>
       </resource>
+      <resource>
+        <directory>../cycle/src/main/runtime/tomcat/resources</directory>
+        <filtering>true</filtering>
+      </resource>
     </resources>
+
     <testResources>
       <testResource>
         <directory>src/test/resources</directory>
@@ -311,6 +306,7 @@
         <directory>src/test/javascript</directory>
       </testResource>
     </testResources>
+
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -323,6 +319,7 @@
             </goals>
             <phase>package</phase>
             <configuration>
+              <forceCreation>true</forceCreation>
               <classifier>core</classifier>
               <includes>
                 <include>**/org/camunda/bpm/cycle/**</include>
@@ -343,7 +340,7 @@
             </goals>
             <phase>package</phase>
             <configuration>
-              <classifier>test</classifier>
+              <forceCreation>true</forceCreation>
               <includes>
                 <include>**/org/camunda/bpm/cycle/connector/test/util/RepositoryUtil.*</include>
               </includes>
@@ -358,10 +355,6 @@
           <webResources>
             <resource>
               <filtering>true</filtering>
-              <directory>${web.resources.override}</directory>
-            </resource>
-            <resource>
-              <filtering>true</filtering>
               <directory>src/main/webapp</directory>
               <!-- no filtering for favicon because linux destroys images through carriage return -->
               <excludes>
@@ -369,12 +362,6 @@
               </excludes>
             </resource>
           </webResources>
-          <archive>
-            <manifest>
-              <!-- Maven project version number -->
-              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-            </manifest>
-          </archive>
         </configuration>
       </plugin>
       
@@ -394,7 +381,6 @@
   </build>
   
   <profiles>
-    
     <profile>
       <id>distro</id>
       <build>
@@ -459,19 +445,6 @@
           </plugin>
         </plugins>
       </build>
-      <dependencies>
-        <!-- javax.persistence -->
-        <dependency>
-          <groupId>org.hibernate</groupId>
-          <artifactId>hibernate-entitymanager</artifactId>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>com.h2database</groupId>
-          <artifactId>h2</artifactId>
-          <scope>test</scope>
-        </dependency>
-      </dependencies>
     </profile>
     <profile>
       <id>proxy</id>
@@ -502,139 +475,20 @@
           </plugin>
         </plugins>
       </build>
+    </profile>
+    <profile>
+      <id>develop</id>
       <dependencies>
-        <!-- javax.persistence -->
-        <dependency>
-          <groupId>org.hibernate</groupId>
-          <artifactId>hibernate-entitymanager</artifactId>
-          <scope>test</scope>
-        </dependency>
         <dependency>
           <groupId>com.h2database</groupId>
           <artifactId>h2</artifactId>
-          <scope>test</scope>
+          <scope>compile</scope>
         </dependency>
-      </dependencies>
-    </profile>
-    <profile>
-      <id>js-test</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>com.github.searls</groupId>
-            <artifactId>jasmine-maven-plugin</artifactId>
-            <version>1.2.0.1-SNAPSHOT</version>
-            <extensions>true</extensions>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>test</goal>
-                </goals>
-              </execution>
-            </executions>
-            <configuration>
-              <jsSrcDir>${project.basedir}/src/main/webapp/assets/js</jsSrcDir>
-              <jsTestSrcDir>${project.basedir}/src/test/javascript</jsTestSrcDir>
-              <include>*_spec.js</include>
-              <preloadSources>
-                <!-- some base lib -->
-                <source>lib/jquery-1.7.2.min.js</source>
-                <source>lib/bootstrap/bootstrap.js</source>
-                <source>lib/angular/angular.js</source>
-                <source>lib/angular/angular-resource.js</source>
-                <source>lib/angular/angular-mocks.js</source>
-              </preloadSources>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>tomcat</id>
-      <dependencies>
-    
-        <!-- dependencies only used for testing (not added to cycle-tomcat.war in distribution) -->
-        <dependency>
-          <groupId>com.h2database</groupId>
-          <artifactId>h2</artifactId>
-        </dependency>
-    
         <dependency>
           <groupId>javax.mail</groupId>
           <artifactId>mail</artifactId>
+          <scope>compile</scope>
         </dependency>
-
-        <!-- Java EE APIs not provided on tomcat -->
-        <dependency>
-          <groupId>org.hibernate.javax.persistence</groupId>
-          <artifactId>hibernate-jpa-2.0-api</artifactId>
-        </dependency>
-    
-        <dependency>
-          <groupId>org.glassfish</groupId>
-          <artifactId>javax.annotation</artifactId>
-        </dependency>
-    
-        <dependency>
-          <groupId>javax.inject</groupId>
-          <artifactId>javax.inject</artifactId>
-          <version>1</version>
-        </dependency>
-    
-        <dependency>
-          <groupId>org.hibernate</groupId>
-          <artifactId>hibernate-entitymanager</artifactId>
-        </dependency>
-    
-        <dependency>
-          <groupId>cglib</groupId>
-          <artifactId>cglib</artifactId>
-        </dependency>
-        <!-- apache commons -->
-        <dependency>
-          <groupId>commons-io</groupId>
-          <artifactId>commons-io</artifactId>
-        </dependency>
-        <!-- nekohtml -->
-        <dependency>
-          <groupId>net.sourceforge.nekohtml</groupId>
-          <artifactId>nekohtml</artifactId>
-        </dependency>   
-        <dependency>
-          <groupId>com.sun.jersey</groupId>
-          <artifactId>jersey-json</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>com.sun.jersey.contribs</groupId>
-          <artifactId>jersey-spring</artifactId>
-          <exclusions>
-            <exclusion>
-              <artifactId>spring-core</artifactId>
-              <groupId>org.springframework</groupId>
-            </exclusion>
-            <exclusion>
-              <artifactId>spring-beans</artifactId>
-              <groupId>org.springframework</groupId>
-            </exclusion>
-            <exclusion>
-              <artifactId>spring-context</artifactId>
-              <groupId>org.springframework</groupId>
-            </exclusion>
-            <exclusion>
-              <artifactId>spring-web</artifactId>
-              <groupId>org.springframework</groupId>
-            </exclusion>
-            <exclusion>
-              <artifactId>spring-aop</artifactId>
-              <groupId>org.springframework</groupId>
-            </exclusion>
-            <exclusion>
-              <artifactId>asm</artifactId>
-              <groupId>asm</groupId>
-            </exclusion>
-          </exclusions>
-        </dependency>
-              
       </dependencies>
       <build>
         <plugins>
@@ -642,9 +496,9 @@
             <!-- required for i18n with GNU gettext -->
             <!-- run 'mvn gettext:gettext gettext:merge gettext:dist' to update po 
               files and generate a updated message bundle class -->
-            <groupId>org.xnap.commons</groupId>
-            <artifactId>maven-gettext-plugin</artifactId>
-            <version>1.2.3</version>
+            <groupId>com.googlecode.gettext-commons</groupId>
+            <artifactId>gettext-maven-plugin</artifactId>
+            <version>1.2.4</version>
             <configuration>
               <!-- Unix shellscript that runs xgettext and parses views -->
               <xgettextCmd>${basedir}/src/main/po/xgettext.sh</xgettextCmd>
@@ -659,7 +513,7 @@
           <plugin>
             <groupId>org.apache.tomcat.maven</groupId>
             <artifactId>tomcat7-maven-plugin</artifactId>
-            <version>2.0-beta-1</version>
+            <version>2.2</version>
             <executions>
               <execution>
                 <id>tomcat-run</id>

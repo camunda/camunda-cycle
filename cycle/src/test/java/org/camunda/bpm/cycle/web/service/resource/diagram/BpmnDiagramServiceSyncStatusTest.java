@@ -14,8 +14,10 @@ import org.camunda.bpm.cycle.connector.test.util.DummyConnector;
 import org.camunda.bpm.cycle.entity.BpmnDiagram;
 import org.camunda.bpm.cycle.repository.BpmnDiagramRepository;
 import org.camunda.bpm.cycle.web.dto.BpmnDiagramStatusDTO;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.kubek2k.springockito.annotations.ReplaceWithMock;
 import org.kubek2k.springockito.annotations.SpringockitoContextLoader;
 import org.kubek2k.springockito.annotations.experimental.DirtiesMocks;
@@ -37,6 +39,7 @@ import org.springframework.test.context.support.DirtiesContextTestExecutionListe
   locations = { "classpath:/spring/mock/test-context.xml", "classpath:/spring/mock/test-persistence.xml" }
 )
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class, DirtiesMocksTestContextListener.class})
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class BpmnDiagramServiceSyncStatusTest extends AbstractDiagramServiceTest {
 
   @Inject
@@ -52,7 +55,7 @@ public class BpmnDiagramServiceSyncStatusTest extends AbstractDiagramServiceTest
 
   @Test
   @DirtiesMocks
-  public void shouldServeIsUnavailable() {
+  public void shouldServeDiagramStatusIsUnavailable() {
     BpmnDiagram diagram = diagramLastModified(now());
     
     // given
