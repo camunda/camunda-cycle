@@ -2,7 +2,7 @@
 
 BROWSERS="gnome-www-browser x-www-browser firefox chromium chromium-browser google-chrome"
 
-echo "starting camunda BPM platform on Tomcat Application Server";
+echo "starting Camunda Cycle on Tomcat Application Server";
 
 if [ -z "$BROWSER" ]; then
   for executable in $BROWSERS; do
