@@ -73,6 +73,10 @@ angular
         var uri = "secured/resource/connector/" + node.connectorId + "/contents/info?nodeId=" + encodeURI(node.id);
         return $http.get(App.uri(uri));
       },
+      getContent: function (connectorId, nodeId) {
+        var uri = "secured/resource/connector/" + connectorId + "/contents?nodeId=" + escape(nodeId) + "&type=BPMN_FILE";
+        return HttpUtils.makePromise($http.get(App.uri(uri), {"headers": {"Accept": "application/xml"}}));
+      },
       getDiagramStatus: function(diagram) {
         var uri = "secured/resource/diagram/" + diagram.id + "/syncStatus";
         return $http.get(App.uri(uri));
@@ -83,6 +87,9 @@ angular
           uri +="?ts=" + new Date().getTime();
         }
         return uri;
+      },
+      hasImage: function(connectorId) {
+        return HttpUtils.makePromise($http.get(App.uri("secured/resource/connector/" + connectorId + "/hasImage")));
       }
     };
   })

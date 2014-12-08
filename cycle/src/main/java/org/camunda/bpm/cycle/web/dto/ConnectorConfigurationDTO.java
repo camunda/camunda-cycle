@@ -26,6 +26,8 @@ public class ConnectorConfigurationDTO {
   private String connectorName;
   private String connectorClass;
   
+  private boolean bpmnio;
+  
   private Map<String, String> properties;
   
   public ConnectorConfigurationDTO() {
@@ -41,6 +43,8 @@ public class ConnectorConfigurationDTO {
     
     this.connectorName = connectorConfiguration.getConnectorName();
     this.connectorClass = connectorConfiguration.getConnectorClass();
+    
+    this.bpmnio = connectorConfiguration.isBpmnio();
     
     this.properties = connectorConfiguration.getProperties();
   }
@@ -107,6 +111,14 @@ public class ConnectorConfigurationDTO {
   
   public void setProperties(Map<String, String> properties) {
     this.properties = properties;
+  }
+  
+  public boolean isBpmnio() {
+    return bpmnio;
+  }
+
+  public void setBpmnio(boolean bpmnio) {
+    this.bpmnio = bpmnio;
   }
   
   /**

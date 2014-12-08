@@ -55,6 +55,7 @@ public class ConnectorConfigurationProvider {
     copy.setGlobalUser(config.getGlobalUser());
     copy.setLoginMode(config.getLoginMode());
     copy.setName(config.getName());
+    copy.setBpmnio(config.isBpmnio());
     copy.setProperties(new HashMap<String, String>(config.getProperties()));
     
     return copy;

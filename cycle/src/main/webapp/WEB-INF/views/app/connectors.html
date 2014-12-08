@@ -131,6 +131,18 @@
                           </div>
                         </div>
                       </div>
+                      
+                      <div class="control-group">
+                        <label class="control-label" for="useBpmnIo" 
+                               th:text="#{'Use bpmn.io'}"
+                               data-help
+                               data-help-text-var="bpmnioText"
+                               data-help-title-var="bpmnioTitle">Use bpmn.io</label>
+                        <div class="controls">
+                          <input id="bpmnio" name="bpmnio" type="checkbox" ng-model="editConnectorConfiguration.bpmnio"/>
+                        </div>
+                      </div>
+                      
                       <div class="control-group" data-ng-repeat="propertyName in customPropertyNames">
                         <label class="control-label" for="specificField" 
                                data-help

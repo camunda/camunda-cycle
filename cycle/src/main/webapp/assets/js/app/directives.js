@@ -382,6 +382,26 @@ angular
     }
   };
 })
+.directive("embeddedDiagram", function() {
+  return {
+    restrict: 'A',
+    scope : {
+      content: '='
+    },
+    link: function(scope, element, attrs) {
+      var BpmnViewer = window.BpmnJS;
+      var viewer = new BpmnViewer({ container: element, height: '100%', width: '100%' });
+      
+      viewer.importXML(scope.content, function(err) {
+        if (!err) {
+          viewer.get('canvas').zoom('fit-viewport');
+        } else {
+          console.error('something went wrong:', err);
+        }
+      });
+    }
+  };
+})
 .directive("diagramImage", function(App, Commons) {
   return {
     restrict: 'E',
@@ -398,6 +418,7 @@ angular
           scope.status = newStatus;
           
           // FIXME workaround for a angular bug!
+          
           scope.$digest();
           scope.$apply();
       }
@@ -451,7 +472,17 @@ angular
 
       scope.$watch("diagram", function (newDiagramValue) {
         if (newDiagramValue && newDiagramValue.id) {
-          updateImage(newDiagramValue);
+          Commons.hasImage(newDiagramValue.connectorNode.connectorId).then(function(hasImage) {
+            if(hasImage === "true") {
+              updateImage(newDiagramValue);
+            } else {
+              // render diagram using bpmn.io
+              Commons.getContent(newDiagramValue.connectorNode.connectorId, newDiagramValue.connectorNode.id).then(function(content) {
+                scope.status = "BPMNIO";
+                newDiagramValue.content = content;
+              });
+            }
+          });
         }
       });
 
@@ -460,7 +491,17 @@ angular
        */
       scope.$watch("status", function (newStatus, oldStatus) {
         if (scope.diagram && newStatus == "UNKNOWN" && oldStatus) {
-          updateImage(scope.diagram);
+          Commons.hasImage(newDiagramValue.connectorNode.connectorId).then(function(hasImage) {
+            if(hasImage === "true") {
+              updateImage(scope.diagram);
+            } else {
+              // render diagram using bpmn.io
+              Commons.getContent(scope.diagram.connectorNode.connectorId, scope.diagram.connectorNode.id).then(function(content) {
+                scope.status = "BPMNIO";
+                scope.diagram.content = content;
+              });
+            }
+          });
         }
       });
     }

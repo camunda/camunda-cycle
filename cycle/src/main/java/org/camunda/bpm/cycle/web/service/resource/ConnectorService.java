@@ -56,6 +56,15 @@ public class ConnectorService extends AbstractRestService {
   }
   
   @GET
+  @Path("{connectorId}/hasImage")
+  public Response hasImage(@PathParam("connectorId") long connectorId) {
+    Connector connector = getConnector(connectorId);
+    boolean hasImage = !connector.getConfiguration().isBpmnio();
+    return JaxRsUtil.createResponse().status(Status.OK).entity(hasImage)
+        .build();
+  }
+  
+  @GET
   @Path("{connectorId}/children")
   @Produces("application/json")
   public List<ConnectorNodeDTO> children(@PathParam("connectorId") long connectorId, @QueryParam("nodeId") String nodeId, @QueryParam("type") List<ConnectorNodeType> connectorNodeTypes) {

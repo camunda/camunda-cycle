@@ -315,6 +315,19 @@ li.actions .btn:last-child {
   box-sizing: border-box;
 }
 
+.diagram-container {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0; 
+  position: absolute; 
+  line-height: 1em;  
+}
+
+.bjs-powered-by {
+  display: none;
+}
+
 /** override 'background-color' with 'background' to fix the white vertical line in the middle of the button **/
 .sync-btn:hover {
   background: #e6e6e6;

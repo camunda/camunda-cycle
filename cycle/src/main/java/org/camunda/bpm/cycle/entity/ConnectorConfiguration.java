@@ -43,7 +43,13 @@ public class ConnectorConfiguration extends AbstractEntity {
    */
   @Column
   private String connectorName;
-
+  
+  /**
+   * Flag whether to use bpmnio to render diagrams
+   */
+  @Column
+  private boolean bpmnio;
+  
   /**
    * Class name of the backing connector (e.g. some.package.VFSConnector)
    */
@@ -116,5 +122,13 @@ public class ConnectorConfiguration extends AbstractEntity {
 
   public String getConnectorName() {
     return connectorName;
+  }
+  
+  public void setBpmnio(boolean bpmnio) {
+    this.bpmnio = bpmnio;
+  }
+
+  public boolean isBpmnio() {
+    return bpmnio;
   }
 }
