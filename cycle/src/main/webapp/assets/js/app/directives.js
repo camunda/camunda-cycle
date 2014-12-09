@@ -357,12 +357,14 @@ angular
 		helpTitleVar: "&", 
 		colorInvert: "@"
     },
-    template: '<span ng-transclude></span><span class="help-toggle"><i class="icon-question-sign" ng-class="colorInvertCls()"></i></span>',
+    template: '<span ng-transclude></span><span ng-show="showHelp" class="help-toggle"><i class="icon-question-sign" ng-class="colorInvertCls()"></i></span>',
     transclude: true, 		
     link: function(scope, element, attrs) {
       var help = attrs.helpText || scope.helpTextVar, 
           helpTitle = attrs.helpTitle || scope.helpTitleVar, 
           colorInvert = !!attrs.colorInvert;
+      
+      scope.showHelp = typeof help === "function" ? !!help() : !!help;
       
       scope.colorInvertCls = function() {
     	  return (colorInvert ? 'icon-white' : '');
