@@ -337,6 +337,7 @@
               <includes>
                 <include>**/org/camunda/bpm/cycle/**</include>
                 <include>**/org/camunda/bpm/cycle/web/dto/*</include>
+                <include>**/org/camunda/bpm/security/**</include>
               </includes>
               <excludes>
                 <exclude>**/org/camunda/bpm/cycle/web/*</exclude>
