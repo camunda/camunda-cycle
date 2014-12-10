@@ -3,8 +3,6 @@ package org.camunda.bpm.cycle.connector.git;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.attribute.FileAttribute;
 import java.util.Iterator;
 import java.util.List;
 
@@ -35,7 +33,7 @@ import org.springframework.util.Assert;
 /**
  * This connector just delegates to a {@link VfsConnector} and pulls from remote
  * before and push to remote after any read or write action.
- * 
+ *
  * @author Joerg Bellmann <joerg.bellmann@zalando.de>
  */
 @Component
@@ -74,13 +72,10 @@ public class GitConnector extends Connector {
 
           log.debug("Initialize Git-Connector ...");
 
-          try {
-
-            final File baseTemporaryFileStoreDirectory = Files.createTempDirectory("CAMUNDA_GIT_CON_TEMP_", new FileAttribute[0]).toFile();
-
-            baseTemporaryFileStore = baseTemporaryFileStoreDirectory.getAbsolutePath();
-          } catch (IOException e) {
-            throw new RuntimeException("Unable to create TempFolder for GitConnector!", e);
+          baseTemporaryFileStore = System.getProperty("java.io.tmpdir") + File.separator + "CAMUNDA_GIT_CON_TEMP_";
+          File tempDir = new File(baseTemporaryFileStore);
+          if(!tempDir.exists()) {
+            tempDir.mkdir();
           }
 
           String branchNameProperty = config.getProperties().get(CONFIG_KEY_BRANCH_NAME);
@@ -196,7 +191,7 @@ public class GitConnector extends Connector {
 
   /**
    * Returns true if the repository is not null.
-   * 
+   *
    * @return
    */
   protected boolean isRepositoryInitialized() {
@@ -205,7 +200,7 @@ public class GitConnector extends Connector {
 
   /**
    * Returns true if the delegate is not null.
-   * 
+   *
    * @see #delegate
    * @return
    */
