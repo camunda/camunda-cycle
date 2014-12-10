@@ -474,13 +474,13 @@ angular
 
       scope.$watch("diagram", function (newDiagramValue) {
         if (newDiagramValue && newDiagramValue.id) {
-          Commons.hasImage(newDiagramValue.connectorNode.connectorId).then(function(hasImage) {
-            if(hasImage === "true") {
+          Commons.useImage(newDiagramValue.connectorNode.connectorId).then(function(useImage) {
+            if(useImage === "true") {
               updateImage(newDiagramValue);
             } else {
-              // render diagram using bpmn.io
+              // render diagram
               Commons.getContent(newDiagramValue.connectorNode.connectorId, newDiagramValue.connectorNode.id).then(function(content) {
-                scope.status = "BPMNIO";
+                scope.status = "RENDERED";
                 newDiagramValue.content = content;
               });
             }
@@ -493,13 +493,13 @@ angular
        */
       scope.$watch("status", function (newStatus, oldStatus) {
         if (scope.diagram && newStatus == "UNKNOWN" && oldStatus) {
-          Commons.hasImage(newDiagramValue.connectorNode.connectorId).then(function(hasImage) {
-            if(hasImage === "true") {
+          Commons.useImage(newDiagramValue.connectorNode.connectorId).then(function(useImage) {
+            if(useImage === "true") {
               updateImage(scope.diagram);
             } else {
-              // render diagram using bpmn.io
+              // render diagram
               Commons.getContent(scope.diagram.connectorNode.connectorId, scope.diagram.connectorNode.id).then(function(content) {
-                scope.status = "BPMNIO";
+                scope.status = "RENDERED";
                 scope.diagram.content = content;
               });
             }

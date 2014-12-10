@@ -26,7 +26,7 @@ public class ConnectorConfigurationDTO {
   private String connectorName;
   private String connectorClass;
   
-  private boolean bpmnio;
+  private boolean useImage;
   
   private Map<String, String> properties;
   
@@ -44,7 +44,7 @@ public class ConnectorConfigurationDTO {
     this.connectorName = connectorConfiguration.getConnectorName();
     this.connectorClass = connectorConfiguration.getConnectorClass();
     
-    this.bpmnio = connectorConfiguration.isBpmnio();
+    this.useImage = connectorConfiguration.isUseImage();
     
     this.properties = connectorConfiguration.getProperties();
   }
@@ -113,16 +113,16 @@ public class ConnectorConfigurationDTO {
     this.properties = properties;
   }
   
-  public boolean isBpmnio() {
-    return bpmnio;
+  public boolean isUseImage() {
+    return useImage;
   }
 
-  public void setBpmnio(boolean bpmnio) {
-    this.bpmnio = bpmnio;
+  public void setUseImage(boolean useImage) {
+    this.useImage = useImage;
   }
   
   /**
-   * Wraps a connector configuation as a data object
+   * Wraps a connector configuration as a data object
    * @param connector configuration
    * @return 
    */

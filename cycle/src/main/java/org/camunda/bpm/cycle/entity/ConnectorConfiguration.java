@@ -45,10 +45,10 @@ public class ConnectorConfiguration extends AbstractEntity {
   private String connectorName;
   
   /**
-   * Flag whether to use bpmnio to render diagrams
+   * Flag whether to use a modeler image to display the bpmn diagram
    */
   @Column
-  private boolean bpmnio;
+  private boolean useImage;
   
   /**
    * Class name of the backing connector (e.g. some.package.VFSConnector)
@@ -124,11 +124,11 @@ public class ConnectorConfiguration extends AbstractEntity {
     return connectorName;
   }
   
-  public void setBpmnio(boolean bpmnio) {
-    this.bpmnio = bpmnio;
+  public void setUseImage(boolean useImage) {
+    this.useImage = useImage;
   }
 
-  public boolean isBpmnio() {
-    return bpmnio;
+  public boolean isUseImage() {
+    return useImage;
   }
 }

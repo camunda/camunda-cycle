@@ -102,7 +102,7 @@ public class ConnectorConfigurationService extends AbstractRestService {
     config.setLoginMode(data.getLoginMode());
     config.setProperties(data.getProperties());
     config.setName(data.getName());
-    config.setBpmnio(data.isBpmnio());
+    config.setUseImage(data.isUseImage());
   }
 
   private ConnectorConfiguration createConfiguration(ConnectorConfigurationDTO data) {

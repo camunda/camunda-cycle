@@ -801,8 +801,8 @@ function EditConnectorController($scope, $http, App, ConnectorConfiguration) {
   $scope.editPasswordText = "Input a new password to override the existing password. If left blank, the password is unchanged.";
   $scope.editPasswordTitle = "Password";
   
-  $scope.bpmnioText = "If checked, diagrams will be rendered with bpmn.io, otherwise you have to provide an image file displaying the bpmn diagram";
-  $scope.bpmnioTitle= "Use bpmn.io";
+  $scope.useImageText = "If checked, diagrams are displayed using an image provided by the modeling tool instead of rendering the bpmn file";
+  $scope.useImageTitle= "Use Modeler Image";
 }
 
 function DeleteConnectorConfigurationController($scope, $location, $http, App) {

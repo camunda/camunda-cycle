@@ -1,6 +1,6 @@
 <div>
   <div data-ng-show="status != 'LOADED'">
-    <div class="centered" data-ng-show="status != 'BPMNIO'">{{diagram.label}}</div>
+    <div class="centered" data-ng-show="status != 'RENDERED'">{{diagram.label}}</div>
     <div ng-switch on="status">
       <p data-ng-switch-when="UNAVAILABLE">
         <i class="icon-warning-sign"></i>
@@ -10,7 +10,7 @@
         <i class="icon-loading"></i>
         <span th:text="#{'Loading the image'}"></span>
       </p>
-      <div class="diagram-container" embedded-diagram content="diagram.content" data-ng-switch-when="BPMNIO"></div>
+      <div class="diagram-container" embedded-diagram content="diagram.content" data-ng-switch-when="RENDERED"></div>
     </div>
   </div>
 

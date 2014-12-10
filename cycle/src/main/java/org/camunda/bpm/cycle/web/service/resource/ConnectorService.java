@@ -56,11 +56,11 @@ public class ConnectorService extends AbstractRestService {
   }
   
   @GET
-  @Path("{connectorId}/hasImage")
-  public Response hasImage(@PathParam("connectorId") long connectorId) {
+  @Path("{connectorId}/useImage")
+  public Response useImage(@PathParam("connectorId") long connectorId) {
     Connector connector = getConnector(connectorId);
-    boolean hasImage = !connector.getConfiguration().isBpmnio();
-    return JaxRsUtil.createResponse().status(Status.OK).entity(hasImage)
+    boolean useImage = connector.getConfiguration().isUseImage();
+    return JaxRsUtil.createResponse().status(Status.OK).entity(useImage)
         .build();
   }
   

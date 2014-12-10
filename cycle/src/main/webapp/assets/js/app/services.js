@@ -88,8 +88,8 @@ angular
         }
         return uri;
       },
-      hasImage: function(connectorId) {
-        return HttpUtils.makePromise($http.get(App.uri("secured/resource/connector/" + connectorId + "/hasImage")));
+      useImage: function(connectorId) {
+        return HttpUtils.makePromise($http.get(App.uri("secured/resource/connector/" + connectorId + "/useImage")));
       }
     };
   })
