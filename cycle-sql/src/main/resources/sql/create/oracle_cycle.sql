@@ -28,6 +28,7 @@
         globalUser varchar2(255 char),
         loginMode varchar2(255 char),
         name varchar2(255 char),
+        useImage number(1,0),
         primary key (id)
     )
 ;
