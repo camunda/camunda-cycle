@@ -58,7 +58,7 @@ public class LocalGitConnectorTest extends AbstractConnectorTestBase {
     log.info("tempFileStore: " + temporaryFileStoreFolder.getAbsolutePath());
     config.getProperties().put(SvnConnector.CONFIG_KEY_TEMPORARY_FILE_STORE, temporaryFileStoreFolder.getAbsolutePath());
 
-    config.getProperties().put(SvnConnector.CONFIG_KEY_REPOSITORY_PATH, getUri());
+    config.getProperties().put(GitConnector.CONFIG_KEY_REPOSITORY_PATH, getUri());
 
     //
     // String username = config.getProperties().get(GitConnector.USERNAME);
