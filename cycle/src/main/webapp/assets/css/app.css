@@ -321,7 +321,13 @@ li.actions .btn:last-child {
   bottom: 0;
   right: 0; 
   position: absolute; 
-  line-height: 1em;  
+  line-height: 1em;
+  cursor: pointer;  
+}
+
+.carousel-inner>.active .diagram-container {
+  position: initial;
+  cursor: initial;
 }
 
 .bjs-powered-by {

@@ -391,16 +391,50 @@ angular
       content: '='
     },
     link: function(scope, element, attrs) {
-      var BpmnViewer = window.BpmnJS;
-      var viewer = new BpmnViewer({ container: element, height: '100%', width: '100%' });
       
-      viewer.importXML(scope.content, function(err) {
-        if (!err) {
-          viewer.get('canvas').zoom('fit-viewport');
-        } else {
-          console.error('something went wrong:', err);
+      scope.$on('$destroy', function() {
+        if(intervalHandle) {
+          window.clearInterval(intervalHandle);
         }
       });
+      var checkFunction = function() {
+        if($(element).is(":visible")) {
+          window.clearInterval(intervalHandle);
+          linkFct();
+        }
+      };
+      var linkFct = function() {
+        var BpmnViewer = window.BpmnJS;
+        var viewer = new BpmnViewer({ container: element, height: '100%', width: '100%' });
+        
+        viewer.importXML(scope.content, function(err) {
+          if (!err) {
+            var viewBox = viewer.get('canvas').viewbox();
+  
+            // set size of containing element to innersize if its the zoomed version
+            if($(element).closest('.carousel-inner').length > 0) {
+              $(element).css("height", (viewBox.inner.height + viewBox.inner.y)+"px");
+              $(element).css("width", (viewBox.inner.width + viewBox.inner.x)+"px");
+              
+              scope.$digest();
+              scope.$apply();
+            } else {
+              viewer.get('canvas').zoom('fit-viewport');
+            } 
+          } else {
+            console.error('something went wrong:', err);
+          }
+        });
+        function performImageClick() {
+          scope.$apply(function() {
+            scope.$parent.click();
+          });
+        }
+        $(element).bind({
+          click: performImageClick
+        });
+      };
+      var intervalHandle = window.setInterval(checkFunction, 500);
     }
   };
 })
@@ -453,10 +487,10 @@ angular
           },
           error: function(){
             changeImageStatus("UNAVAILABLE");
-          }, 
+          },
           click: performImageClick
         });
-
+        
       // $scope.checkImageAvailable();
 //      scope.checkImageAvailable = function () {
 //        if (scope.diagram) {

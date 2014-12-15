@@ -48,7 +48,7 @@
     <property name="loginMode" value="LOGIN_NOT_REQUIRED" />
     <property name="properties">
       <map>
-        <entry key="repositoryPath" value=""></entry>
+        <entry key="gitRepositoryPath" value=""></entry>
         <entry key="branchname" value="cycle"></entry>
       </map>
     </property>

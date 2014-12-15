@@ -184,7 +184,6 @@ function RoundtripDetailsController($scope, $routeParams, RoundtripDetails, Comm
 
   $scope.delayedSetCurrentPicture = function (picture) {
     setTimeout(function() {
-      console.log(picture);
       $scope.setCurrentPicture(picture);
       
       // Same bug as with the tree; DO NOT DELETE the following two lines!
@@ -664,6 +663,7 @@ function EditConnectorController($scope, $http, App, ConnectorConfiguration) {
   var BASE_PATH = "BASE_PATH",
       SIGNAVIO_BASE_URL = "signavioBaseUrl",
       REPO_PATH = "repositoryPath",
+      GIT_REPO_PATH = "gitRepositoryPath",
       FOLDER_ROOT_PATH = "folderRootPath",
       ALLOW_ALL_SSL_HOSTNAMES = "allowAllSSLHostnames",
       TEMPORARY_FILE_STORE = "temporaryFileStore",
@@ -795,6 +795,8 @@ function EditConnectorController($scope, $http, App, ConnectorConfiguration) {
      return "enter proxy username if your proxy requires one, otherwise ignore it.";
    } else if (propertyKey == PROXY_PASSWORD) {
      return "enter proxy password if your proxy requires one, otherwise ignore it.";
+   } else if (propertyKey == GIT_REPO_PATH) {
+     return "The GIT URL to use, e.g. 'git@github.com:camunda/camunda-bpm-platform.git'";
    }
   };
   
