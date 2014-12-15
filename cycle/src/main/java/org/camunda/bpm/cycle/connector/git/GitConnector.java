@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
 import org.camunda.bpm.cycle.connector.Connector;
@@ -42,7 +43,7 @@ public class GitConnector extends Connector {
   private final Logger log = LoggerFactory.getLogger(GitConnector.class);
 
   // taken von SVN-Connector
-  public static final String CONFIG_KEY_REPOSITORY_PATH = "repositoryPath";
+  public static final String CONFIG_KEY_REPOSITORY_PATH = "gitRepositoryPath";
   public static final String CONFIG_KEY_BRANCH_NAME = "branchname";
 
   public static final String DEFAULT_BRANCH_NAME = "cycle";
@@ -72,7 +73,7 @@ public class GitConnector extends Connector {
 
           log.debug("Initialize Git-Connector ...");
 
-          baseTemporaryFileStore = System.getProperty("java.io.tmpdir") + File.separator + "CAMUNDA_GIT_CON_TEMP_";
+          baseTemporaryFileStore = System.getProperty("java.io.tmpdir") + File.separator + "CAMUNDA_GIT_CON_TEMP_" + UUID.randomUUID().toString();
           File tempDir = new File(baseTemporaryFileStore);
           if(!tempDir.exists()) {
             tempDir.mkdir();
@@ -384,7 +385,9 @@ public class GitConnector extends Connector {
   public void dispose() {
     log.debug("enter 'dispose'");
     delegate.dispose();
-    disposeRepository();
+    if(localGit != null) {
+      disposeRepository();
+    }
     localGit = null;
   }
 
@@ -395,36 +398,13 @@ public class GitConnector extends Connector {
     log.debug("enter 'disposeRepository'");
 
     try {
-      this.localGit.commit().setMessage("Dispose Connector").call();
-
-      Iterable<PushResult> pushResults = this.localGit.push().setCredentialsProvider(new UsernamePasswordCredentialsProvider(username, password)).setPushAll()
-          .call();
-
-      for (PushResult pResult : pushResults) {
-
-        Iterator<RemoteRefUpdate> update = pResult.getRemoteUpdates().iterator();
-
-        while (update.hasNext()) {
-
-          RemoteRefUpdate u = update.next();
-          log.debug("RemoteRefUpdate-Status: {}", u.getStatus().toString());
-        }
-      }
 
       try {
         FileUtils.deleteDirectory(new File(this.baseTemporaryFileStore));
       } catch (IOException e) {
         log.error("Unable to delete 'baseTemporaryFileStore'", e);
       }
-    } catch (InvalidRemoteException e) {
 
-      log.error(e.getMessage(), e);
-    } catch (TransportException e) {
-
-      log.error(e.getMessage(), e);
-    } catch (GitAPIException e) {
-
-      log.error(e.getMessage(), e);
     } finally {
       this.localGit = null;
     }
