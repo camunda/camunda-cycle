@@ -327,7 +327,7 @@ li.actions .btn:last-child {
 
 .carousel-inner>.active .diagram-container {
   position: initial;
-  cursor: initial;
+  cursor: default;
 }
 
 .bjs-powered-by {

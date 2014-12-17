@@ -413,8 +413,11 @@ angular
   
             // set size of containing element to innersize if its the zoomed version
             if($(element).closest('.carousel-inner').length > 0) {
+              var modalBody = $(element).closest('.modal-body');
               $(element).css("height", (viewBox.inner.height + viewBox.inner.y)+"px");
               $(element).css("width", (viewBox.inner.width + viewBox.inner.x)+"px");
+              modalBody.css("height", (viewBox.inner.height + viewBox.inner.y)+"px");
+              modalBody.css("width", (viewBox.inner.width + viewBox.inner.x)+"px");
               
               scope.$digest();
               scope.$apply();
