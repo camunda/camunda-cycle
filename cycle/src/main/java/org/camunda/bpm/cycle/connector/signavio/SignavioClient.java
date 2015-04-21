@@ -1,32 +1,5 @@
 package org.camunda.bpm.cycle.connector.signavio;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.charset.Charset;
-import java.security.SecureRandom;
-import java.security.cert.X509Certificate;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.net.ssl.KeyManager;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLException;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-
 import org.apache.http.*;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -57,12 +30,27 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.SyncBasicHttpParams;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
+import org.camunda.bpm.cycle.exception.CycleException;
+import org.camunda.bpm.cycle.util.IoUtil;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import org.camunda.bpm.cycle.exception.CycleException;
-import org.camunda.bpm.cycle.util.IoUtil;
+import javax.net.ssl.*;
+import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.charset.Charset;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Encapsulates all HTTP calls to Signavio/camunda modeler REST API using Apache HTTP 4 client.
@@ -83,7 +71,7 @@ public class SignavioClient {
   private static final int CONNECTION_TTL = 5000;
   private static final int RETRIES_CONNECTION_EXCEPTION = 1;
 
-  private static final String WARNING_SNIPPET = "<div id=\"warning\">([^<]+)</div>";
+  private static final String WARNING_SNIPPET = "<div .*=\"warning\">([^<]+)</div>";
   
   private static final String LOGIN_URL_SUFFIX = "login";
   private static final String REPOSITORY_BACKEND_URL_SUFFIX = "p";
