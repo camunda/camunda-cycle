@@ -33,7 +33,7 @@ On the commandline execute
 
 ```
 > cd cycle
-> mvn clean tomcat:run -Ptomcat
+> mvn clean tomcat:run -Pdevelop
 ```
 
 This boots up an embedded tomcat on [http://localhost:8080/camunda-cycle/](http://localhost:8080/camunda-cycle/).
