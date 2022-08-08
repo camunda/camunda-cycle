@@ -13,7 +13,7 @@
   <packaging>pom</packaging>
 
   <properties>
-    <version.tomcat>7.0.50</version.tomcat>
+    <version.tomcat>8.5.75</version.tomcat>
   </properties>
 
   <dependencies>
