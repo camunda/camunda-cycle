@@ -30,7 +30,7 @@
     <version.servlet-api>2.5</version.servlet-api>
 
     <!-- database drivers -->
-    <version.h2>1.3.168</version.h2>
+    <version.h2>2.1.210</version.h2>
     <version.oracle11g>11.2.0.3</version.oracle11g>
     <version.oracle10g>10.2.0.5</version.oracle10g>
     <version.mysql>5.1.21</version.mysql>
